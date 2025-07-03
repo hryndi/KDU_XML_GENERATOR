@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Download, Eye, FileText, Plus, Trash2, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
 
 interface Package {
@@ -146,12 +146,12 @@ function App() {
       services: [...prev.services, newServices],
     }));
   };
-  const removeServices = (index: number): void => {
-    setFormData((prev) => ({
-      ...prev,
-      services: prev.services.filter((_, i) => i !== index),
-    }));
-  };
+  // const removeServices = (index: number): void => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     services: prev.services.filter((_, i) => i !== index),
+  //   }));
+  // };
 
   const generateServicesXML = (): string => {
     if (formData.services.length === 0) return "";
