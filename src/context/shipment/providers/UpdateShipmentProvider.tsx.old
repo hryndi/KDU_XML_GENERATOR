@@ -1,0 +1,29 @@
+import { type ReactNode } from "react";
+import { updateShipmentContext } from "../contexts";
+import { useFormData } from "../../FormData/useFormData";
+
+type FormDataProviderProps = {
+  children: ReactNode;
+};
+
+type ShipmentFieldValueT = string | number | boolean | Date | null | undefined;
+
+export const UpdateShipmentProvider = ({ children }: FormDataProviderProps) => {
+  const { setFormData } = useFormData();
+
+  const updateShipment = (index: number, field: string, value: ShipmentFieldValueT) => {
+    setFormData((prev) => ({
+      ...prev,
+      shipments: prev.shipments.map((shipment, i) => (i === index ? { ...shipment, [field]: value } : shipment)),
+    }));
+  };
+
+  return <updateShipmentContext.Provider value={updateShipment}>{children}</updateShipmentContext.Provider>;
+};
+
+// const updateShipment = ({ index, field, value }: updateShipmentFunc) => {
+//   formData.setFormData((prev) => ({
+//     ...prev,
+//     shipments: prev.shipments.map((shipment, i) => (i === index ? { ...shipment, [field]: value } : shipment)),
+//   }));
+// };
