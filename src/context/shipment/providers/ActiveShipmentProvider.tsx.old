@@ -1,0 +1,16 @@
+import { useState, type ReactNode } from "react";
+import { ActiveShipmentContext } from "../contexts";
+
+type FormDataProviderProps = {
+  children: ReactNode;
+};
+
+export const ActiveShipmentProvider = ({ children }: FormDataProviderProps) => {
+  const [activeShipment, setActiveShipment] = useState<number>(0);
+
+  return (
+    <ActiveShipmentContext.Provider value={{ activeShipment, setActiveShipment }}>
+      {children}
+    </ActiveShipmentContext.Provider>
+  );
+};
