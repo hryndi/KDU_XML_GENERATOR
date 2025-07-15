@@ -10,6 +10,7 @@ const ShipmentType = () => {
   const updateShipment = useUpdateShipment();
   const { setIsPickup } = useStatements();
   const currentShipment = formData.shipments[activeShipment] || formData.shipments[0];
+
   return (
     <>
       {/* Shipment Type */}
@@ -23,7 +24,6 @@ const ShipmentType = () => {
             <label key={type} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
-                name="shipment_type"
                 value={type}
                 checked={currentShipment.shipmentType === type}
                 onChange={(e) => {

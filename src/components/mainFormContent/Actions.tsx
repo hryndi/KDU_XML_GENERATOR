@@ -4,12 +4,16 @@ import { useFormData } from "../../context/FormData/useFormData";
 import { useActiveShipment } from "../../context/shipment/useActiveShipment";
 import type { Shipment } from "../../types/formData";
 import { useEffect } from "react";
+import { useSchemaContext } from "../../context/schemaContext/useSchemaContext";
+import { FormDataSchema } from "../../lib/inputsValidation";
 
 const Actions = () => {
   const { formData } = useFormData();
   const { isPickup } = useStatements();
   const { activeShipment } = useActiveShipment();
-  const { xmlOutput, showPreview, setShowPreview, setXmlOutput } = useStatements();
+  const { xmlOutput, showPreview, setShowPreview, setXmlOutput, isDangerousGoodsActive } = useStatements();
+  const { form } = useSchemaContext();
+
   const currentShipment = formData.shipments[activeShipment] || formData.shipments[0];
 
   useEffect(() => {
@@ -137,7 +141,7 @@ ${dg.package_types
         </address>`
         }
       </addresses>
-${generateDangerousGoodsXML(shipment)}
+${isDangerousGoodsActive ? generateDangerousGoodsXML(shipment) : ""}
       ${!isPickup ? "<packages>" : ""}
 ${
   !isPickup
@@ -182,12 +186,33 @@ ${
     URL.revokeObjectURL(url);
   };
 
+  const onGenerate = () => {
+    const result = FormDataSchema.safeParse(formData);
+    if (!result.success) {
+      generateXML();
+    } else {
+      console.log("Shipment valid!", result.data);
+      console.error(result.error);
+    }
+  };
+  const onError = (errors: any) => {
+    console.group("🚨 Form Submission Failed - Validation Errors:");
+    console.log("Full error object:", errors);
+
+    Object.entries(errors).forEach(([field, error]: [string, any]) => {
+      console.log(`❌ ${field}: ${error?.message || "Unknown error"}`);
+    });
+
+    console.log("Current form values:", form.getValues());
+    console.groupEnd();
+  };
+
   return (
     <>
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
         <button
-          onClick={generateXML}
+          onClick={form.handleSubmit(onGenerate, onError)}
           className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium"
         >
           <FileText size={18} />

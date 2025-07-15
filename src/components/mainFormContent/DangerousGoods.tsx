@@ -5,11 +5,14 @@ import type { DangerousGood } from "../../types/formData";
 import { useFormData } from "../../context/FormData/useFormData";
 import { useStatements } from "../../context/states/useStates";
 
+import { useSchemaContext } from "../../context/schemaContext/useSchemaContext";
+
 const DangerousGoods = () => {
   const { setFormData } = useFormData();
   const updateShipment = useUpdateShipment();
   const { activeShipment, currentShipment } = useActiveShipment();
-  const { isDangerousGoodsActive, setIsDangerousGoodsActive } = useStatements();
+  const { isDangerousGoodsActive, updateDangerousGoodsActive } = useStatements();
+
   // Add null checks and default values
   const dangerousGoods = currentShipment?.dangerousGoods || {};
   const placards = dangerousGoods.placards || [];
@@ -64,7 +67,7 @@ const DangerousGoods = () => {
           </h3>
           <button
             type="button"
-            onClick={() => setIsDangerousGoodsActive(!isDangerousGoodsActive)}
+            onClick={() => updateDangerousGoodsActive()}
             className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors flex items-center gap-2"
           >
             {isDangerousGoodsActive ? "Hide" : "Show"} Details
@@ -137,7 +140,7 @@ const DangerousGoods = () => {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  {placards.map((placard) => (
+                  {placards.map((placard, index) => (
                     <div key={placard.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <div className="flex-1">
                         <div>
@@ -203,7 +206,7 @@ const DangerousGoods = () => {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  {flags.map((flag) => (
+                  {flags.map((flag, index) => (
                     <div key={flag.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <div className="flex-1">
                         <div>
@@ -222,6 +225,14 @@ const DangerousGoods = () => {
                             }
                             className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
+
+                          {
+                            // @ts-ignore
+                            errors.flags?.[index]?.type?.message && (
+                              // @ts-ignore
+                              <span className="text-red-500 text-sm">{errors.flags[index].type.message}</span>
+                            )
+                          }
                         </div>
                       </div>
                       <div className="flex-1">
@@ -269,7 +280,7 @@ const DangerousGoods = () => {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  {additionalinfos.map((info) => (
+                  {additionalinfos.map((info, index) => (
                     <div key={info.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <div className="flex-1">
                         <div>
@@ -335,7 +346,7 @@ const DangerousGoods = () => {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  {package_types.map((packageType) => (
+                  {package_types.map((packageType, index) => (
                     <div key={packageType.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <div className="flex-1">
                         <div>
