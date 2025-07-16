@@ -82,7 +82,7 @@ const defaultValues: FormData = {
   ],
 };
 
-export const StatementsProvider = ({ children }: StatesProviderProps) => {
+export const SchemeProvider = ({ children }: StatesProviderProps) => {
   const form = useForm<ShipmentTypeFormData>({
     resolver: zodResolver(FormDataSchema),
     defaultValues: defaultValues || {
