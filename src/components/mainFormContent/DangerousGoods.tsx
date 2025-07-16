@@ -5,8 +5,6 @@ import type { DangerousGood } from "../../types/formData";
 import { useFormData } from "../../context/FormData/useFormData";
 import { useStatements } from "../../context/states/useStates";
 
-import { useSchemaContext } from "../../context/schemaContext/useSchemaContext";
-
 const DangerousGoods = () => {
   const { setFormData } = useFormData();
   const updateShipment = useUpdateShipment();
@@ -140,7 +138,7 @@ const DangerousGoods = () => {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  {placards.map((placard, index) => (
+                  {placards.map((placard) => (
                     <div key={placard.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <div className="flex-1">
                         <div>
@@ -280,7 +278,7 @@ const DangerousGoods = () => {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  {additionalinfos.map((info, index) => (
+                  {additionalinfos.map((info) => (
                     <div key={info.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <div className="flex-1">
                         <div>
@@ -346,7 +344,7 @@ const DangerousGoods = () => {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  {package_types.map((packageType, index) => (
+                  {package_types.map((packageType) => (
                     <div key={packageType.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <div className="flex-1">
                         <div>
