@@ -1,10 +1,14 @@
 import { useFormData } from "../../context/FormData/useFormData";
+
 import { useActiveShipment } from "../../context/shipment/useActiveShipment";
 import type { Service, Services as ServicesT } from "../../types/formData";
+
+
 
 const Services = () => {
   const { formData, setFormData } = useFormData();
   const { activeShipment } = useActiveShipment();
+
 
   const changeService = (e: React.ChangeEvent<HTMLInputElement>, groupIndex: number) => {
     const serviceType = e.target.value as ServicesT["service"][number]["service"];
@@ -64,7 +68,10 @@ const Services = () => {
   return (
     <div className="bg-gray-50 rounded-lg">
       <div className="space-y-4">
-        {formData.shipments[activeShipment].services.map((serviceGroup, groupIndex) => (
+        {formData.shipments[activeShipment].services.map((serviceGroup, groupIndex) => {
+         const servicePath = `shipments.${activeShipment}.services.${groupIndex}`;
+        return (
+            
           <div key={groupIndex} className="bg-white p-4 rounded-lg border border-gray-200">
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-lg font-semibold text-gray-800">Services</h3>
@@ -78,6 +85,7 @@ const Services = () => {
                   {["NORMAL", "B2B", "DISCRET"].map((serviceType) => (
                     <label key={serviceType} className="flex items-center">
                       <input
+                    
                         type="checkbox"
                         value={serviceType}
                         checked={serviceGroup.service.some((service: Service) => service.service === serviceType)}
@@ -107,7 +115,7 @@ const Services = () => {
               </div>
             </div>
           </div>
-        ))}
+        )})}
         {/* <button
           onClick={addServices}
           className="flex items-center gap-2 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"

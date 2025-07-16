@@ -1,5 +1,7 @@
 import { FileText } from "lucide-react";
-
+import { useForm } from "react-hook-form";
+import { FormDataSchema } from "../../lib/inputsValidation";
+import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
 import { useFormData } from "../../context/FormData/useFormData";
 
 const OriginFileInfo = () => {
@@ -12,6 +14,8 @@ const OriginFileInfo = () => {
       originDate: newDate, // Update the origin date in formData
     }));
   };
+
+
 
   return (
     <>
@@ -27,6 +31,7 @@ const OriginFileInfo = () => {
             <input
               type="text"
               value={formData.originFileName}
+             
               onChange={(e) => setFormData((prev) => ({ ...prev, originFileName: e.target.value }))}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
@@ -35,6 +40,7 @@ const OriginFileInfo = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">Origin Date</label>
             <input
               type="date"
+           
               // value={convertToInputFormat(formData.originDate)}
               onChange={(e) => dateUpdate(e)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"

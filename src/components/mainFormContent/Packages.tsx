@@ -2,6 +2,9 @@ import { Plus, Trash2 } from "lucide-react";
 import { useFormData } from "../../context/FormData/useFormData";
 import { useActiveShipment } from "../../context/shipment/useActiveShipment";
 import type { Package } from "../../types/formData";
+import { PackageSchema } from "../../lib/inputsValidation";
+import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
+import { useForm } from "react-hook-form";
 
 const Packages = () => {
   const { formData, setFormData } = useFormData();

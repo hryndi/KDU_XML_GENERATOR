@@ -1,7 +1,12 @@
-import { Package } from "lucide-react";
+import { Dice5, Package } from "lucide-react";
 import { useActiveShipment } from "../../context/shipment/useActiveShipment";
 import { useFormData } from "../../context/FormData/useFormData";
 import { useUpdateShipment } from "../../context/shipment/useUpdateShipment";
+import { generateUniqueID } from "../../helpers/random";
+import { ShipmentSchema } from "../../lib/inputsValidation";
+import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
+import { useForm } from "react-hook-form";
+
 const ShipmentInformation = () => {
   const updateShipment = useUpdateShipment();
   //   const activeShipment = useContext(ActiveShipmentContext);
@@ -81,7 +86,7 @@ const ShipmentInformation = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Shipment Type</label>
               <select
                 value={currentShipment?.shipmentType || "NORMAL"}
@@ -92,9 +97,15 @@ const ShipmentInformation = () => {
                 <option value="EXPRESS">EXPRESS</option>
                 <option value="OVERNIGHT">OVERNIGHT</option>
               </select>
-            </div>
+            </div> */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Shipment Reference</label>
+              <div className="flex gap-2 items-center mb-2">
+                <label className="block  text-sm font-medium text-gray-700 ">Shipment Reference</label>
+                <Dice5
+                  size={18}
+                  onClick={() => updateShipment(activeShipment, "shipmentReference", generateUniqueID(8))}
+                />
+              </div>
               <input
                 type="text"
                 value={currentShipment?.shipmentReference || ""}
