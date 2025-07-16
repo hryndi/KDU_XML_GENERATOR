@@ -3,9 +3,6 @@ import { useActiveShipment } from "../../context/shipment/useActiveShipment";
 import { useFormData } from "../../context/FormData/useFormData";
 import { useUpdateShipment } from "../../context/shipment/useUpdateShipment";
 import { generateUniqueID } from "../../helpers/random";
-import { ShipmentSchema } from "../../lib/inputsValidation";
-import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
-import { useForm } from "react-hook-form";
 
 const ShipmentInformation = () => {
   const updateShipment = useUpdateShipment();
